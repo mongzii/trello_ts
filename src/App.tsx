@@ -2,6 +2,8 @@ import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { darkTheme } from "./theme";
 import { ThemeProvider } from "styled-components";
+import { useRecoilState } from "recoil";
+import { minutesState } from "./atoms";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Hind&display=swap');
@@ -67,10 +69,19 @@ a {
 `;
 
 function App() {
+  const [minutes, setMinutes] = useRecoilState(minutesState);
+  const onMinutesChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setMinutes(+event.currentTarget.value);
+  };
   return (
     <>
       <GlobalStyle />
-      <input type="number" placeholder="Minutes" />
+      <input
+        value={minutes}
+        onChange={onMinutesChange}
+        type="number"
+        placeholder="Minutes"
+      />
       <input type="number" placeholder="Hours" />
     </>
   );
